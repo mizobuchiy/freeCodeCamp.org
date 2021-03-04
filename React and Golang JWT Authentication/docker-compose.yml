@@ -1,0 +1,28 @@
+version: "3"
+services:
+  go-auth:
+    build:
+      context: .
+      dockerfile: DockerFile
+    tty: true
+    volumes:
+      - ./go-auth:/go-auth
+    ports:
+      - 8000:8000
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yu_go_auth
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db/my.cnf:etc/mysql/conf.d/my.cnf
+    ports:
+      - 3306:3306
+volumes:
+  db-data:
+    driver: local
