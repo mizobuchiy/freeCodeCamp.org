@@ -1,26 +1,40 @@
 version: "3"
 services:
+  # Golang
   go-auth:
+    container_name: go-auth
     build:
       context: .
       dockerfile: DockerFile
+    depends_on:
+      - db
     tty: true
     volumes:
       - ./go-auth:/go-auth
     ports:
       - 8000:8000
-  db:
-    image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: yu_go_auth
+      MYSQL_DATABASE: yt_go_auth
+      MYSQL_HOST: dockerMySQL
       MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_PASSWORD: rootroot
+
+  # MySQL
+  db:
+    container_name: dockerMySQL
+    build:
+      context: ./mysql/
+      dockerfile: DockerFile
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      MYSQL_DATABASE: yt_go_auth
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rootroot
       TZ: "Asia/Tokyo"
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-      - db-data:/var/lib/mysql
-      - ./db/my.cnf:etc/mysql/conf.d/my.cnf
+      - db/data:/var/lib/mysql
+      - ./mysql/conf.d/my.conf:/etc/mysql/my.conf
     ports:
       - 3306:3306
 volumes:
