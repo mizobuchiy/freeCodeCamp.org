@@ -33,7 +33,7 @@ services:
       TZ: "Asia/Tokyo"
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-      - db/data:/var/lib/mysql
+      - db-data:/var/lib/mysql
       - ./mysql/conf.d/my.conf:/etc/mysql/my.conf
     ports:
       - 3306:3306
