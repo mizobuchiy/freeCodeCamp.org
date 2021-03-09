@@ -1,11 +1,14 @@
-package databese
+package database
 
 import (
 	"os"
 	"fmt"
+	"go-auth/models"
 	"gorm.io/gorm"
 	"gorm.io/driver/mysql"
 )
+
+var DB *gorm.DB
 
 func Connect()  {
 	user := os.Getenv("MYSQL_USER")
@@ -14,9 +17,14 @@ func Connect()  {
   dbname := os.Getenv("MYSQL_DATABASE")
 	connection := fmt.Sprintf("%s:%s@tcp(%s)/%s", user, pass, host, dbname)
 
-	_, err := gorm.Open(mysql.Open(connection), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(connection), &gorm.Config{})
 
 	if err != nil {
 		panic(err)
 	}
+
+	DB = db
+
+	db.AutoMigrate(&models.User{})
+
 }
