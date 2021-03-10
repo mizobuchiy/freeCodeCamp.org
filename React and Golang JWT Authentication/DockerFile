@@ -8,3 +8,4 @@ RUN go get github.com/gofiber/fiber/v2
 RUN go get -u gorm.io/gorm
 RUN go get -u gorm.io/driver/mysql
 RUN go get golang.org/x/crypto/bcrypt
+RUN go get github.com/dgrijalva/jwt-go
