@@ -1,0 +1,7 @@
+FROM node:15.11.0-alpine3.10
+
+WORKDIR /usr/src/app
+
+
+RUN npm install -g create-react-app
+RUN npx create-react-app react-auth --template typescript

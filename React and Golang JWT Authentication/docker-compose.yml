@@ -1,10 +1,25 @@
 version: "3"
 services:
+  # React
+  react-auth:
+    container_name: react-auth
+    build:
+      context: ./front
+      dockerfile: DockerFile
+    tty: true
+    command: sh -c "cd react-auth && yarn start"
+    volumes:
+      - ./front/:/usr/src/app
+      - /usr/src/app/react-auth/node_modules
+    ports:
+      - 3000:3000
+    stdin_open: true
+
   # Golang
   go-auth:
     container_name: go-auth
     build:
-      context: .
+      context: ./go-auth
       dockerfile: DockerFile
     depends_on:
       - db
