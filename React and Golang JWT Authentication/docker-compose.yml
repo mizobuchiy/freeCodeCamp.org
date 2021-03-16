@@ -16,6 +16,10 @@ services:
     stdin_open: true
     environment:
       - CHOKIDAR_USEPOLLING=true
+    networks: 
+      - auth-network
+    links: 
+      - go-auth
 
   # Golang
   go-auth:
@@ -35,6 +39,8 @@ services:
       MYSQL_HOST: dockerMySQL
       MYSQL_USER: root
       MYSQL_PASSWORD: rootroot
+    networks: 
+      - auth-network
 
   # MySQL
   db:
@@ -54,6 +60,11 @@ services:
       - ./mysql/conf.d/my.conf:/etc/mysql/my.conf
     ports:
       - 3306:3306
+    networks: 
+      - auth-network
 volumes:
   db-data:
     driver: local
+networks: 
+  auth-network:
+    external: true
