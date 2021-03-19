@@ -15,6 +15,7 @@ function App() {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
+
       const content = await response.json();
 
       setName(content.name);
@@ -24,11 +25,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Nav name={name} />
+        <Nav name={name} setName={setName} />
 
         <main className="form-signin">
           <Route path="/" exact component={() => <Home name={name} />} />
-          <Route path="/login" component={Login} />
+          <Route path="/login" component={() => <Login setName={setName} />} />
           <Route path="/register" component={Resister} />
         </main>
       </BrowserRouter>
