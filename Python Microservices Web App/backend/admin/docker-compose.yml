@@ -5,11 +5,20 @@ services:
     build:
       context: .
       dockerfile: DockerFile
+    command: "python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     volumes:
       - .:/app/
     tty: true
+    depends_on:
+      - db
+
+  queue:
+    build:
+      context: .
+      dockerfile: DockerFile
+    command: "python consumer.py"
     depends_on:
       - db
 
